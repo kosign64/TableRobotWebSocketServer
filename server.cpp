@@ -50,7 +50,6 @@ void Server::newConnection()
         }
         pointsJson = pointsJson.left(pointsJson.length() - 1);
         pointsJson += "]";
-        qDebug() << pointsJson;
         socket->sendTextMessage(pointsJson);
     }
     else
