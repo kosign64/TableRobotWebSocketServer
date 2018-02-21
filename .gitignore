@@ -1,0 +1,6 @@
+*.user*
+Makefile
+Server
+*.o
+moc_*
+*.stash
