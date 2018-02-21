@@ -42,18 +42,7 @@ void Server::newConnection()
                 &Server::disconnected);
         sockets_ << socket;
 
-        QString pointsJson = "[";
-        for(auto &point : points_)
-        {
-            pointsJson += QString::number(point.x) + QString(",");
-            pointsJson += QString::number(point.y) + QString(",");
-        }
-        if(!points_.empty())
-        {
-            pointsJson = pointsJson.left(pointsJson.length() - 1);
-        }
-        pointsJson += "]";
-        socket->sendTextMessage(pointsJson);
+        sendPoints(socket);
     }
     else
     {
@@ -105,15 +94,7 @@ void Server::readyRead(QString message)
         data_[robotNumber] = controlByte;
     }
 
-    QString pointsJson = "[";
-    for(auto &point : points_)
-    {
-        pointsJson += QString::number(point.x) + QString(",");
-        pointsJson += QString::number(point.y) + QString(",");
-    }
-    pointsJson = pointsJson.left(pointsJson.length() - 1);
-    pointsJson += "]";
-    socket->sendTextMessage(pointsJson);
+    sendPoints(socket);
 }
 
 void Server::timerEvent(QTimerEvent *)
@@ -123,4 +104,20 @@ void Server::timerEvent(QTimerEvent *)
         robots_->sendWheels(data_);
         data_.clear();
     }
+}
+
+void Server::sendPoints(QWebSocket *socket) const
+{
+    QString pointsJson = "[";
+    for(auto &point : points_)
+    {
+        pointsJson += QString::number(point.x) + QString(",");
+        pointsJson += QString::number(point.y) + QString(",");
+    }
+    if(!points_.empty())
+    {
+        pointsJson = pointsJson.left(pointsJson.length() - 1);
+    }
+    pointsJson += "]";
+    socket->sendTextMessage(pointsJson);
 }

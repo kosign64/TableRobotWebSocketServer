@@ -46,6 +46,8 @@ private:
 
     static const int MAX_CONNECTIONS = 10;
 
+    void sendPoints(QWebSocket *socket) const;
+
 private slots:
     void newConnection();
     void readyRead(QString message);
