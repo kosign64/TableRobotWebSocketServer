@@ -48,7 +48,10 @@ void Server::newConnection()
             pointsJson += QString::number(point.x) + QString(",");
             pointsJson += QString::number(point.y) + QString(",");
         }
-        pointsJson = pointsJson.left(pointsJson.length() - 1);
+        if(!points_.empty())
+        {
+            pointsJson = pointsJson.left(pointsJson.length() - 1);
+        }
         pointsJson += "]";
         socket->sendTextMessage(pointsJson);
     }
