@@ -58,6 +58,7 @@ ul.nav {
 ul li.nav {
 	float: left;
 	margin: auto;
+    width: 100%;
 }
 
 ul li a.nav {
@@ -68,6 +69,7 @@ ul li a.nav {
 	text-decoration: none;
 	font-size: 24px;
 	cursor: pointer;
+    width: 100%;
 }
 
 ul li a.active {
@@ -108,7 +110,7 @@ ul li a.nav:hover {
     .col-10 {width: 83.33%;}
     .col-11 {width: 91.66%;}
     .col-12 {width: 100%;}
-    ul li {width: auto;}
+    ul li.nav {width: auto;}
 }
 
 .row::after {
