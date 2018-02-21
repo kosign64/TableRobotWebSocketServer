@@ -86,16 +86,7 @@ window.onload = function() {
 	field.X_SCALE = 3746 / field.ACTUAL_WIDTH;
 	field.RECT_WIDTH =  (3970 - field.X_OFFSET) - field.RECT_X0;
 	field.RECT_HEIGHT =  (553 - field.Y_OFFSET) - field.RECT_Y0;
-	field.scaleFactor = canvas.width / field.ACTUAL_WIDTH;
-	field.boardOrigin = {
-			x: (field.RECT_X0 / field.X_SCALE) * field.scaleFactor,
-			y: field.RECT_Y0 * field.scaleFactor
-	};
-	field.boardWidth = field.RECT_WIDTH * field.scaleFactor / 
-			field.X_SCALE;
-	field.boardHeight = field.RECT_HEIGHT * field.scaleFactor;
-	field.robotRadius = field.ROBOT_RADIUS * field.scaleFactor;
-	field.pointRadius = field.POINT_RADIUS * field.scaleFactor;
+	resizeField();
 
 	field.drawBoard();
 
@@ -267,4 +258,34 @@ window.onload = function() {
 
 	setInterval(function(){field.reDraw();}, 25);
 
+	document.getElementsByTagName("body")[0].onresize = function() {
+		resizeField();
+	};
+
+	function getWidth() {
+  		return Math.max(
+    		document.body.scrollWidth,
+    		document.documentElement.scrollWidth,
+    		document.body.offsetWidth,
+    		document.documentElement.offsetWidth,
+    		document.documentElement.clientWidth
+  		);
+	}
+
+	function resizeField() {
+		var width = getWidth() / 2.13;
+		var height = width / 1.333333;
+		canvas.setAttribute("width", width);
+		canvas.setAttribute("height", height);
+		field.scaleFactor = canvas.width / field.ACTUAL_WIDTH;
+		field.boardOrigin = {
+				x: (field.RECT_X0 / field.X_SCALE) * field.scaleFactor,
+				y: field.RECT_Y0 * field.scaleFactor
+		};
+		field.boardWidth = field.RECT_WIDTH * field.scaleFactor / 
+				field.X_SCALE;
+		field.boardHeight = field.RECT_HEIGHT * field.scaleFactor;
+		field.robotRadius = field.ROBOT_RADIUS * field.scaleFactor;
+		field.pointRadius = field.POINT_RADIUS * field.scaleFactor;
+	}
 };
